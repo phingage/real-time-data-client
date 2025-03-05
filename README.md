@@ -8,10 +8,10 @@ Here is a quick example about how to connect to the service and start receiving 
 
 ```typescript
 import { RealTimeDataClient } from "../src/client";
-import { RawData } from "ws";
+import { Message } from "../src/model";
 
-const onMessage = (event: RawData): void => {
-    console.log(event.toString());
+const onMessage = (message: Message): void => {
+    console.log(message.topic, message.type, message.payload);
 };
 
 const onConnect = (client: RealTimeDataClient): void => {
