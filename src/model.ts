@@ -21,5 +21,5 @@ export interface Message {
     topic: string;
     type: string;
     timestamp: number;
-    payload: {};
+    payload: object;
 }

@@ -77,8 +77,7 @@ export class RealTimeDataClient {
     };
 
     public subscribe(msg: SubscriptionMessage) {
-        (msg as any).action = "subscribe";
-        this.ws.send(JSON.stringify(msg), (err?: Error) => {
+        this.ws.send(JSON.stringify({ action: "subscribe", ...msg }), (err?: Error) => {
             if (err) {
                 console.error("subscribe error", err);
                 this.ws.close();
@@ -87,8 +86,7 @@ export class RealTimeDataClient {
     }
 
     public unsubscribe(msg: SubscriptionMessage) {
-        (msg as any).action = "unsubscribe";
-        this.ws.send(JSON.stringify(msg), (err?: Error) => {
+        this.ws.send(JSON.stringify({ action: "unsubscribe", ...msg }), (err?: Error) => {
             if (err) {
                 console.error("unsubscribe error", err);
                 this.ws.close();
