@@ -1,8 +1,8 @@
 import { RealTimeDataClient } from "../src/client";
-import { RawData } from "ws";
+import { Message } from "../src/model";
 
-const onMessage = (event: RawData): void => {
-    console.log(event.toString());
+const onMessage = (message: Message): void => {
+    console.log(message.topic, message.type, message.payload);
 };
 
 const onConnect = (client: RealTimeDataClient): void => {
@@ -28,4 +28,4 @@ const onConnect = (client: RealTimeDataClient): void => {
     */
 };
 
-new RealTimeDataClient(onMessage, onConnect).connect();
+new RealTimeDataClient(onConnect, onMessage).connect();

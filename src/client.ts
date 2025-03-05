@@ -1,5 +1,5 @@
 import { WebSocket, RawData } from "ws";
-import { SubscriptionMessage } from "./model";
+import { SubscriptionMessage, Message } from "./model";
 
 const DEFAULT_HOST = "wss://ws-live-data.polymarket.com";
 const DEFAULT_PING_INTERVAL = 5000;
@@ -8,14 +8,14 @@ export class RealTimeDataClient {
     private readonly host: string;
     private readonly pingInterval: number;
     private readonly autoReconnect: boolean;
-    private readonly onMessage: (event: RawData) => void;
+    private readonly onCustomMessage?: (message: Message) => void;
     private readonly onConnect?: (client: RealTimeDataClient) => void;
 
     private ws!: WebSocket;
 
     constructor(
-        onMessage?: (event: RawData) => void,
         onConnect?: (client: RealTimeDataClient) => void,
+        onMessage?: (message: Message) => void,
         host?: string,
         pingInterval?: number,
         autoReconnect?: boolean,
@@ -23,11 +23,7 @@ export class RealTimeDataClient {
         this.host = host || DEFAULT_HOST;
         this.pingInterval = pingInterval || DEFAULT_PING_INTERVAL;
         this.autoReconnect = autoReconnect || true;
-        this.onMessage =
-            onMessage ||
-            ((event: RawData) => {
-                console.log(event.toString());
-            });
+        this.onCustomMessage = onMessage;
         this.onConnect = onConnect;
     }
 
@@ -67,6 +63,17 @@ export class RealTimeDataClient {
                 console.error("ping error", err);
             }
         });
+    };
+    private onMessage = (event: RawData): void => {
+        const eventS = event.toString();
+        if (eventS && eventS.length) {
+            if (this.onCustomMessage) {
+                const message = JSON.parse(eventS);
+                this.onCustomMessage(message as Message);
+            } else {
+                console.log(eventS);
+            }
+        }
     };
 
     public subscribe(msg: SubscriptionMessage) {
