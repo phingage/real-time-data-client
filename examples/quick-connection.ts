@@ -2,14 +2,7 @@ import { RealTimeDataClient } from "../src/client";
 import { Message } from "../src/model";
 
 const onMessage = (message: Message): void => {
-    const now = new Date().getTime();
-    console.log(
-        message.topic,
-        message.type,
-        message.payload,
-        "latency",
-        `${now - message.timestamp * 1000} milliseconds`,
-    );
+    console.log(message.topic, message.type, message.payload);
 };
 
 const onConnect = (client: RealTimeDataClient): void => {

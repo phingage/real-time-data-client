@@ -19,8 +19,9 @@ const onConnect = (client: RealTimeDataClient): void => {
     client.subscribe({
         subscriptions: [
             {
-                topic: "activity",
-                type: "trades",
+                topic: "comments",
+                type: "*", // "*"" can be used to connect to all the types of the topic
+                filters: `{"parentEntityID":100,"parentEntityType":"Event"}`,
             },
         ],
     });
@@ -35,14 +36,14 @@ Once the connection is stablished and you have a `client: RealTimeDataClient` ob
 
 ### Subscribe
 
-Subscribe to all messages from the topic 'activity' and to the new messages of the event id 100.
+Subscribe to 'trades' messages from the topic 'activity' and to the all comments messages.
 
 ```typescript
 client.subscribe({
     subscriptions: [
         {
             topic: "activity",
-            type: "*",
+            type: "trades",
         },
     ],
 });
@@ -51,8 +52,7 @@ client.subscribe({
     subscriptions: [
         {
             topic: "comments",
-            type: "new-comment",
-            filters: "parent_entity_id=100",
+            type: "*", // "*"" can be used to connect to all the types of the topic
         },
     ],
 });
