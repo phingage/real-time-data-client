@@ -75,11 +75,15 @@ client.subscribe({
 
 ## Messages hierarchy
 
-| Topic    | Type   | Auth | Schema |
-| -------- | ------ | ---- | ------ |
-| activity | trades | -    | Trade  |
+| Topic    | Type            | Auth | Filters (if it is empty the messages won't be filtered)         | Schema   |
+| -------- | --------------- | ---- | --------------------------------------------------------------- | -------- |
+| activity | trades          | -    | -                                                               | Trade    |
+| comments | commentcreated  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment  |
+| comments | commentremoved  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment  |
+| comments | reactioncreated | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction |
+| comments | reactionremoved | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction |
 
-## Trade
+### Trade
 
 | Name                  | Type    | Description                                        |
 | --------------------- | ------- | -------------------------------------------------- |
@@ -102,3 +106,28 @@ client.subscribe({
 | timestamp             | integer | Timestamp of the trade                             |
 | title                 | string  | Title of the event                                 |
 | transactionHash       | string  | Hash of the transaction                            |
+
+### Comment
+
+| Name             | Type   | Description                                 |
+| ---------------- | ------ | ------------------------------------------- |
+| id               | string | Unique identifier of comment                |
+| body             | string | Content of the comment                      |
+| parentEntityType | string | Type of the parent entity (Event or Series) |
+| parentEntityID   | number | ID of the parent entity                     |
+| parentCommentID  | string | ID of the parent comment                    |
+| userAddress      | string | Address of the user                         |
+| replyAddress     | string | Address of the reply user                   |
+| createdAt        | string | Creation timestamp                          |
+| updatedAt        | string | Last update timestamp                       |
+
+### Reaction
+
+| Name         | Type   | Description                    |
+| ------------ | ------ | ------------------------------ |
+| id           | string | Unique identifier of reaction  |
+| commentID    | number | ID of the comment              |
+| reactionType | string | Type of the reaction           |
+| icon         | string | Icon representing the reaction |
+| userAddress  | string | Address of the user            |
+| createdAt    | string | Creation timestamp             |
