@@ -10,8 +10,8 @@ const onConnect = (client: RealTimeDataClient): void => {
     client.subscribe({
         subscriptions: [
             {
-                topic: "activity",
-                type: "trades", // "*"" can be used to connect to all the types of the topic
+                topic: "comments",
+                type: "*", // "*"" can be used to connect to all the types of the topic
             },
         ],
     });
