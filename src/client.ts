@@ -67,7 +67,7 @@ export class RealTimeDataClient {
     private onMessage = (event: RawData): void => {
         const eventS = event.toString();
         if (eventS && eventS.length) {
-            if (this.onCustomMessage) {
+            if (this.onCustomMessage && eventS.includes("topic")) {
                 const message = JSON.parse(eventS);
                 this.onCustomMessage(message as Message);
             } else {
