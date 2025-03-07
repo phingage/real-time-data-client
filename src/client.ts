@@ -8,14 +8,14 @@ export class RealTimeDataClient {
     private readonly host: string;
     private readonly pingInterval: number;
     private readonly autoReconnect: boolean;
-    private readonly onCustomMessage?: (message: Message) => void;
     private readonly onConnect?: (client: RealTimeDataClient) => void;
+    private readonly onCustomMessage?: (client: RealTimeDataClient, message: Message) => void;
 
     private ws!: WebSocket;
 
     constructor(
         onConnect?: (client: RealTimeDataClient) => void,
-        onMessage?: (message: Message) => void,
+        onMessage?: (client: RealTimeDataClient, message: Message) => void,
         host?: string,
         pingInterval?: number,
         autoReconnect?: boolean,
@@ -69,12 +69,16 @@ export class RealTimeDataClient {
         if (eventS && eventS.length) {
             if (this.onCustomMessage && eventS.includes("payload")) {
                 const message = JSON.parse(eventS);
-                this.onCustomMessage(message as Message);
+                this.onCustomMessage(this, message as Message);
             } else {
                 console.log(eventS);
             }
         }
     };
+
+    public disconnect() {
+        this.ws.close();
+    }
 
     public subscribe(msg: SubscriptionMessage) {
         this.ws.send(JSON.stringify({ action: "subscribe", ...msg }), (err?: Error) => {
