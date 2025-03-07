@@ -12,7 +12,7 @@ const onConnect = (client: RealTimeDataClient): void => {
             {
                 topic: "comments",
                 type: "*", // "*"" can be used to connect to all the types of the topic
-                filters: ``,
+                filters: `{"parentEntityID":100,"parentEntityType":"Event"}`,
             },
         ],
     });
