@@ -75,13 +75,13 @@ client.subscribe({
 
 ## Messages hierarchy
 
-| Topic    | Type            | Auth | Filters (if it is empty the messages won't be filtered)         | Schema   |
-| -------- | --------------- | ---- | --------------------------------------------------------------- | -------- |
-| activity | trades          | -    | -                                                               | Trade    |
-| comments | commentcreated  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment  |
-| comments | commentremoved  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment  |
-| comments | reactioncreated | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction |
-| comments | reactionremoved | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction |
+| Topic    | Type             | Auth | Filters (if it is empty the messages won't be filtered)         | Schema   |
+| -------- | ---------------- | ---- | --------------------------------------------------------------- | -------- |
+| activity | trades           | -    | -                                                               | Trade    |
+| comments | comment_created  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment  |
+| comments | comment_removed  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment  |
+| comments | reaction_created | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction |
+| comments | reaction_removed | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction |
 
 ### Trade
 
