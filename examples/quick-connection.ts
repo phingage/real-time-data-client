@@ -12,8 +12,16 @@ const onConnect = (client: RealTimeDataClient): void => {
             {
                 topic: "comments",
                 type: "*", // "*"" can be used to connect to all the types of the topic
-                filters: `{"parentEntityID":100,"parentEntityType":"Event"}`,
+                //filters: `{"parentEntityID":20200,"parentEntityType":"Event"}`,
             },
+
+            /*
+            // Subscribe to more topics
+            {
+                topic: "activity",
+                type: "trades",
+            },
+            */
         ],
     });
     /*
@@ -29,4 +37,4 @@ const onConnect = (client: RealTimeDataClient): void => {
     */
 };
 
-new RealTimeDataClient(onConnect, onMessage).connect();
+new RealTimeDataClient({ onConnect, onMessage }).connect();

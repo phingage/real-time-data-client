@@ -73,6 +73,14 @@ client.subscribe({
 });
 ```
 
+### Disconnect
+
+The `client` object provides a method to disconnect from the `WebSocket` server:
+
+```typescript
+client.disconnect();
+```
+
 ## Messages hierarchy
 
 | Topic    | Type             | Auth | Filters (if it is empty the messages won't be filtered)         | Schema   |

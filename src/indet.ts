@@ -1,4 +1,11 @@
-import { RealTimeDataClient } from "./client";
+import { RealTimeDataClient, RealTimeDataClientArgs } from "./client";
 import { ClobApiKeyCreds, GammaAuth, SubscriptionMessage, Message } from "./model";
 
-export { RealTimeDataClient, ClobApiKeyCreds, GammaAuth, SubscriptionMessage, Message };
+export {
+    RealTimeDataClient,
+    RealTimeDataClientArgs,
+    ClobApiKeyCreds,
+    GammaAuth,
+    SubscriptionMessage,
+    Message,
+};
