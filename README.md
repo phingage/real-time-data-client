@@ -21,13 +21,13 @@ const onConnect = (client: RealTimeDataClient): void => {
             {
                 topic: "comments",
                 type: "*", // "*"" can be used to connect to all the types of the topic
-                filters: `{"parentEntityID":100,"parentEntityType":"Event"}`,
+                filters: `{"parentEntityID":100,"parentEntityType":"Event"}`, // empty means no filter
             },
         ],
     });
 };
 
-new RealTimeDataClient(onMessage, onConnect).connect();
+new RealTimeDataClient({ onMessage, onConnect }).connect();
 ```
 
 ## How to subscribe and unsubscribe from messages
