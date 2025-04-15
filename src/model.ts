@@ -47,14 +47,23 @@ export interface SubscriptionMessage {
  */
 export interface Message {
     /** Topic of the message */
-    topic: string;
+	topic: "comments" | "activity" 
 
     /** Type of the message */
-    type: string;
+    type:  "comment_created" | "comment_removed" | "reaction_created" | "reaction_removed" | "trades";
 
     /** Timestamp of when the message was sent */
     timestamp: number;
 
     /** Payload containing the message data */
     payload: object;
+}
+
+/**
+ * Represents websocket connection status
+ */
+export enum ConnectionStatus {
+	CONNECTING = "CONNECTING",
+	CONNECTED = "CONNECTED",
+	DISCONNECTED = "DISCONNECTED",
 }
