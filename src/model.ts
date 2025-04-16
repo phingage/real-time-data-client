@@ -47,15 +47,10 @@ export interface SubscriptionMessage {
  */
 export interface Message {
     /** Topic of the message */
-    topic: "comments" | "activity";
+    topic: string;
 
     /** Type of the message */
-    type:
-        | "comment_created"
-        | "comment_removed"
-        | "reaction_created"
-        | "reaction_removed"
-        | "trades";
+    type: string;
 
     /** Timestamp of when the message was sent */
     timestamp: number;
