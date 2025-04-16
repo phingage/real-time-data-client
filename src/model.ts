@@ -47,10 +47,15 @@ export interface SubscriptionMessage {
  */
 export interface Message {
     /** Topic of the message */
-	topic: "comments" | "activity" 
+    topic: "comments" | "activity";
 
     /** Type of the message */
-    type:  "comment_created" | "comment_removed" | "reaction_created" | "reaction_removed" | "trades";
+    type:
+        | "comment_created"
+        | "comment_removed"
+        | "reaction_created"
+        | "reaction_removed"
+        | "trades";
 
     /** Timestamp of when the message was sent */
     timestamp: number;
@@ -63,7 +68,7 @@ export interface Message {
  * Represents websocket connection status
  */
 export enum ConnectionStatus {
-	CONNECTING = "CONNECTING",
-	CONNECTED = "CONNECTED",
-	DISCONNECTED = "DISCONNECTED",
+    CONNECTING = "CONNECTING",
+    CONNECTED = "CONNECTED",
+    DISCONNECTED = "DISCONNECTED",
 }

@@ -20,7 +20,8 @@
     "scripts": {
         "build": "make build",
         "lint": "make lint",
-        "deploy": "yarn build && npm publish"
+        "deploy": "yarn build && npm publish",
+        "format": "prettier --write ."
     },
     "dependencies": {
         "isomorphic-ws": "^5.0.0",
