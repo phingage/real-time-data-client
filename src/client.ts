@@ -133,7 +133,7 @@ export class RealTimeDataClient {
      * @param reason Buffer containing the reason for closure.
      */
     private onClose = async (message: CloseEvent) => {
-        console.error("disconnected", "code", message.code, "reason", message.reason.toString());
+        console.error("disconnected", "code", message.code, "reason", message.reason);
         this.notifyStatusChange(ConnectionStatus.DISCONNECTED);
         if (this.autoReconnect) {
             this.connect();
