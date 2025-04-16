@@ -86,8 +86,6 @@ export class RealTimeDataClient {
      * Establishes a WebSocket connection to the server.
      */
     public connect() {
-		console.log("WebSocket", WebSocket);
-		console.log("this.host", this.host);
 		this.notifyStatusChange(ConnectionStatus.CONNECTING);
         this.ws = new WebSocket(this.host);
 		if (this.ws){
@@ -115,7 +113,6 @@ export class RealTimeDataClient {
      * Handles WebSocket 'pong' event. Continues the ping cycle.
      */
     private onPong = async () => {
-		console.log("onPong", {interval: this.pingInterval, this: this})
         delay(this.pingInterval).then(() => this.ping());
     };
 
@@ -159,11 +156,9 @@ export class RealTimeDataClient {
      * @param event Raw WebSocket message data.
      */
     private onMessage = (event: MessageEvent): void => {
-		console.log("onMessage", { event,  customMessage: this.onCustomMessage,  });	
         if (typeof event.data === "string" && event.data.length > 0) {
             if (this.onCustomMessage && event.data.includes("payload")) {
                 const message = JSON.parse(event.data);
-				console.log("onMessage", { message });	
                 this.onCustomMessage(this, message as Message);
             } else {
                 console.log("onMessage error", { event });
@@ -184,7 +179,6 @@ export class RealTimeDataClient {
      * @param msg Subscription request message.
      */
     public subscribe(msg: SubscriptionMessage) {
-		console.log("subscribing", { subscriptions: msg.subscriptions, msg,});
         this.ws.send(JSON.stringify({ action: "subscribe", ...msg }), (err?: Error) => {
             if (err) {
                 console.error("subscribe error", err);
@@ -212,7 +206,6 @@ export class RealTimeDataClient {
      * @param status status of the connection
      */
 	private notifyStatusChange(status: ConnectionStatus) {
-		console.log("notifyStatusChange", { onStatusChange: this.onStatusChange, status, readyState: this?.ws?.readyState ?? 0})
     	if (this.onStatusChange) {
         	this.onStatusChange(status);
     	}
