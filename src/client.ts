@@ -1,5 +1,5 @@
-import { WebSocket, RawData } from "ws";
-import { SubscriptionMessage, Message } from "./model";
+import WebSocket, { MessageEvent, CloseEvent, ErrorEvent } from "isomorphic-ws";
+import { SubscriptionMessage, Message, ConnectionStatus } from "./model";
 
 const DEFAULT_HOST = "wss://ws-live-data.polymarket.com";
 const DEFAULT_PING_INTERVAL = 5000;
@@ -20,6 +20,12 @@ export interface RealTimeDataClientArgs {
      * @param message - The message received by the client.
      */
     onMessage?: (client: RealTimeDataClient, message: Message) => void;
+
+    /**
+     * Optional callback function that is called when the client receives a connection status update.
+     * @param status - The connection status of the client.
+     */
+    onStatusChange?: (status: ConnectionStatus) => void;
 
     /**
      * Optional host address to connect to.
@@ -57,6 +63,9 @@ export class RealTimeDataClient {
     /** Callback function executed when a custom message is received */
     private readonly onCustomMessage?: (client: RealTimeDataClient, message: Message) => void;
 
+    /** Callback function executed on a connection status update */
+    private readonly onStatusChange?: (status: ConnectionStatus) => void;
+
     /** WebSocket instance */
     private ws!: WebSocket;
 
@@ -70,18 +79,23 @@ export class RealTimeDataClient {
         this.autoReconnect = args!.autoReconnect || true;
         this.onCustomMessage = args!.onMessage;
         this.onConnect = args!.onConnect;
+        this.onStatusChange = args!.onStatusChange;
     }
 
     /**
      * Establishes a WebSocket connection to the server.
      */
     public connect() {
+        this.notifyStatusChange(ConnectionStatus.CONNECTING);
         this.ws = new WebSocket(this.host);
-        this.ws.on("open", this.onOpen);
-        this.ws.on("message", this.onMessage);
-        this.ws.on("pong", this.onPong);
-        this.ws.on("error", this.onError);
-        this.ws.on("close", this.onClose);
+        if (this.ws) {
+            this.ws.onopen = this.onOpen;
+            this.ws.onmessage = this.onMessage;
+            this.ws.onclose = this.onClose;
+            this.ws.onerror = this.onError;
+            this.ws.pong = this.onPong;
+        }
+        return this;
     }
 
     /**
@@ -89,6 +103,7 @@ export class RealTimeDataClient {
      */
     private onOpen = async () => {
         this.ping();
+        this.notifyStatusChange(ConnectionStatus.CONNECTED);
         if (this.onConnect) {
             this.onConnect(this);
         }
@@ -105,10 +120,10 @@ export class RealTimeDataClient {
      * Handles WebSocket errors. Logs the error and attempts reconnection if `autoReconnect` is enabled.
      * @param err Error object describing the issue.
      */
-    private onError = async (err: Error) => {
+    private onError = async (err: ErrorEvent) => {
         console.error("error", err);
         if (this.autoReconnect) {
-            return this.connect();
+            this.connect();
         }
     };
 
@@ -117,10 +132,11 @@ export class RealTimeDataClient {
      * @param code Close event code.
      * @param reason Buffer containing the reason for closure.
      */
-    private onClose = async (code: number, reason: Buffer) => {
-        console.error("disconnected", "code", code, "reason", reason.toString());
+    private onClose = async (message: CloseEvent) => {
+        console.error("disconnected", "code", message.code, "reason", message.reason);
+        this.notifyStatusChange(ConnectionStatus.DISCONNECTED);
         if (this.autoReconnect) {
-            return this.connect();
+            this.connect();
         }
     };
 
@@ -128,7 +144,7 @@ export class RealTimeDataClient {
      * Sends a ping message to keep the connection alive.
      */
     private ping = async () => {
-        this.ws.ping(undefined, false, (err: Error) => {
+        this.ws.send("ping", (err: Error | undefined) => {
             if (err) {
                 console.error("ping error", err);
             }
@@ -139,14 +155,13 @@ export class RealTimeDataClient {
      * Handles incoming WebSocket messages. Parses and processes custom messages if applicable.
      * @param event Raw WebSocket message data.
      */
-    private onMessage = (event: RawData): void => {
-        const eventS = event.toString();
-        if (eventS && eventS.length) {
-            if (this.onCustomMessage && eventS.includes("payload")) {
-                const message = JSON.parse(eventS);
+    private onMessage = (event: MessageEvent): void => {
+        if (typeof event.data === "string" && event.data.length > 0) {
+            if (this.onCustomMessage && event.data.includes("payload")) {
+                const message = JSON.parse(event.data);
                 this.onCustomMessage(this, message as Message);
             } else {
-                console.log(eventS);
+                console.log("onMessage error", { event });
             }
         }
     };
@@ -177,12 +192,24 @@ export class RealTimeDataClient {
      * @param msg Unsubscription request message.
      */
     public unsubscribe(msg: SubscriptionMessage) {
+        console.log("unsubscribing", { msg });
         this.ws.send(JSON.stringify({ action: "unsubscribe", ...msg }), (err?: Error) => {
             if (err) {
                 console.error("unsubscribe error", err);
                 this.ws.close();
             }
         });
+    }
+
+    /**
+     * Callback for connection status changes
+     * @param status status of the connection
+     */
+    private notifyStatusChange(status: ConnectionStatus) {
+        if (this.onStatusChange) {
+            this.onStatusChange(status);
+        }
+        return status;
     }
 }
 

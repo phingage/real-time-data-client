@@ -58,3 +58,12 @@ export interface Message {
     /** Payload containing the message data */
     payload: object;
 }
+
+/**
+ * Represents websocket connection status
+ */
+export enum ConnectionStatus {
+    CONNECTING = "CONNECTING",
+    CONNECTED = "CONNECTED",
+    DISCONNECTED = "DISCONNECTED",
+}
