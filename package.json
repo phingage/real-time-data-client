@@ -1,6 +1,6 @@
 {
     "name": "@polymarket/real-time-data-client",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "A TypeScript client to receive real time data messages",
     "contributors": [
         {
