@@ -144,6 +144,10 @@ export class RealTimeDataClient {
      * Sends a ping message to keep the connection alive.
      */
     private ping = async () => {
+        if (this.ws.readyState !== WebSocket.OPEN) {
+            return console.warn("Socket not open. Ready state is:", this.ws.readyState);
+        }
+
         this.ws.send("ping", (err: Error | undefined) => {
             if (err) {
                 console.error("ping error", err);
@@ -179,6 +183,9 @@ export class RealTimeDataClient {
      * @param msg Subscription request message.
      */
     public subscribe(msg: SubscriptionMessage) {
+        if (this.ws.readyState !== WebSocket.OPEN) {
+            return console.warn("Socket not open. Ready state is:", this.ws.readyState);
+        }
         this.ws.send(JSON.stringify({ action: "subscribe", ...msg }), (err?: Error) => {
             if (err) {
                 console.error("subscribe error", err);
@@ -192,6 +199,9 @@ export class RealTimeDataClient {
      * @param msg Unsubscription request message.
      */
     public unsubscribe(msg: SubscriptionMessage) {
+        if (this.ws.readyState !== WebSocket.OPEN) {
+            return console.warn("Socket not open. Ready state is:", this.ws.readyState);
+        }
         console.log("unsubscribing", { msg });
         this.ws.send(JSON.stringify({ action: "unsubscribe", ...msg }), (err?: Error) => {
             if (err) {
