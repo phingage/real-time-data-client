@@ -20,6 +20,7 @@ const onConnect = (client: RealTimeDataClient): void => {
             {
                 topic: "activity",
                 type: "trades",
+                filters: `{"event_slug":"slug"} // filters: `{"market_slug":"slug"}
             },
             */
         ],
