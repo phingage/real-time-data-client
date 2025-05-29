@@ -15,14 +15,18 @@ const onConnect = (client: RealTimeDataClient): void => {
                 //filters: `{"parentEntityID":20200,"parentEntityType":"Event"}`,
             },
 
-            /*
             // Subscribe to more topics
             {
                 topic: "activity",
                 type: "trades",
-                filters: `{"event_slug":"slug"} // filters: `{"market_slug":"slug"}
+                //filters: `{"event_slug":"elon-musk-of-tweets-may-23-30"}`, // filters: `{"market_slug":"slug"}`
             },
-            */
+
+            // RFQ
+            {
+                topic: "rfq",
+                type: "*", // "requests" or "quotes"
+            },
         ],
     });
     /*

@@ -90,6 +90,8 @@ client.disconnect();
 | comments | comment_removed  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment  |
 | comments | reaction_created | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction |
 | comments | reaction_removed | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction |
+| rfq      | requests         | -    | -                                                               | Request  |
+| rfq      | quotes           | -    | -                                                               | Quote    |
 
 ### Trade
 
@@ -139,3 +141,36 @@ client.disconnect();
 | icon         | string | Icon representing the reaction |
 | userAddress  | string | Address of the user            |
 | createdAt    | string | Creation timestamp             |
+
+### Request
+
+| Name         | Type   | Description                                                   |
+| ------------ | ------ | ------------------------------------------------------------- |
+| requestId    | string | Unique identifier for the request                             |
+| proxyAddress | string | User proxy address                                            |
+| market       | string | Id of market which is also the CTF condition ID               |
+| token        | string | ERC1155 token ID of conditional token being traded            |
+| complement   | string | Complement ERC1155 token ID of conditional token being traded |
+| state        | string | Current state of the request                                  |
+| side         | string | Indicates buy or sell side                                    |
+| sizeIn       | number | Input size of the request                                     |
+| sizeOut      | number | Output size of the request                                    |
+| price        | number | Price from in/out sizes                                       |
+| expiry       | number | Expiry timestamp (UNIX format)                                |
+
+### Quote
+
+| Name         | Type   | Description                                                   |
+| ------------ | ------ | ------------------------------------------------------------- |
+| quoteId      | string | Unique identifier for the quote                               |
+| requestId    | string | Associated request identifier                                 |
+| proxyAddress | string | User proxy address                                            |
+| token        | string | ERC1155 token ID of conditional token being traded            |
+| state        | string | Current state of the quote                                    |
+| side         | string | Indicates buy or sell side                                    |
+| sizeIn       | number | Input size of the quote                                       |
+| sizeOut      | number | Output size of the quote                                      |
+| sizeOut      | number | Output size of the request                                    |
+| condition    | string | Id of market which is also the CTF condition ID               |
+| complement   | string | Complement ERC1155 token ID of conditional token being traded |
+| expiry       | number | Expiry timestamp (UNIX format)                                |
