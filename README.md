@@ -86,7 +86,7 @@ client.disconnect();
 | Topic       | Type             | Auth     | Filters (if it is empty the messages won't be filtered)         | Schema         |
 | ----------- | ---------------- | -------- | --------------------------------------------------------------- | -------------- |
 | activity    | trades           | -        | '{"event_slug":"string"}' OR '{"market_slug":"string"}'         | Trade          |
-| activity | orders_matched   | -    | '{"event_slug":"string"}' OR '{"market_slug":"string"}'         | Trade    |
+| activity    | orders_matched   | -        | '{"event_slug":"string"}' OR '{"market_slug":"string"}'         | Trade          |
 | comments    | comment_created  | -        | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment        |
 | comments    | comment_removed  | -        | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment        |
 | comments    | reaction_created | -        | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction       |
