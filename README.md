@@ -192,6 +192,13 @@ client.disconnect();
 | timestamp | number | Timestamp in milliseconds for the update |
 | value     | number | Value at the time of update              |
 
+#### Filters
+
+- `{"symbol":"btcusdt"}`
+- `{"symbol":"ethusdt"}`
+- `{"symbol":"xrpusdt"}`
+- `{"symbol":"solusdt"}`
+
 ## Subscription handler types
 
 ### Crypto Price Historical
