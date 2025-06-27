@@ -83,22 +83,25 @@ client.disconnect();
 
 ## Messages hierarchy
 
-| Topic    | Type             | Auth | Filters (if it is empty the messages won't be filtered)         | Schema   |
-| -------- | ---------------- | ---- | --------------------------------------------------------------- | -------- |
-| activity | trades           | -    | '{"event_slug":"string"}' OR '{"market_slug":"string"}'         | Trade    |
-| activity | orders_matched   | -    | '{"event_slug":"string"}' OR '{"market_slug":"string"}'         | Trade    |
-| comments | comment_created  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment  |
-| comments | comment_removed  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment  |
-| comments | reaction_created | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction |
-| comments | reaction_removed | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction |
-| rfq      | request_created  | -    | -                                                               | Request  |
-| rfq      | request_edited   | -    | -                                                               | Request  |
-| rfq      | request_canceled | -    | -                                                               | Request  |
-| rfq      | request_expired  | -    | -                                                               | Request  |
-| rfq      | quote_created    | -    | -                                                               | Quote    |
-| rfq      | quote_edited     | -    | -                                                               | Quote    |
-| rfq      | quote_canceled   | -    | -                                                               | Quote    |
-| rfq      | quote_expired    | -    | -                                                               | Quote    |
+| Topic         | Type             | Auth | Filters (if it is empty the messages won't be filtered)         | Schema       | Subscription Handler    |
+| ------------- | ---------------- | ---- | --------------------------------------------------------------- | ------------ | ----------------------- |
+| activity      | trades           | -    | '{"event_slug":"string"}' OR '{"market_slug":"string"}'         | Trade        |                         |
+| activity      | orders_matched   | -    | '{"event_slug":"string"}' OR '{"market_slug":"string"}'         | Trade        |                         |
+| comments      | comment_created  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment      |                         |
+| comments      | comment_removed  | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Comment      |                         |
+| comments      | reaction_created | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction     |                         |
+| comments      | reaction_removed | -    | '{"parentEntityID":number,"parentEntityType":"Event / Series"}' | Reaction     |                         |
+| rfq           | request_created  | -    | -                                                               | Request      |                         |
+| rfq           | request_edited   | -    | -                                                               | Request      |                         |
+| rfq           | request_canceled | -    | -                                                               | Request      |                         |
+| rfq           | request_expired  | -    | -                                                               | Request      |                         |
+| rfq           | quote_created    | -    | -                                                               | Quote        |                         |
+| rfq           | quote_edited     | -    | -                                                               | Quote        |                         |
+| rfq           | quote_canceled   | -    | -                                                               | Quote        |                         |
+| rfq           | quote_expired    | -    | -                                                               | Quote        |                         |
+| crypto_prices | update           | -    | '{"symbol":string}'                                             | Crypto Price | Crypto Price Historical |
+
+## Message types
 
 ### Trade
 
@@ -180,3 +183,20 @@ client.disconnect();
 | condition    | string | Id of market which is also the CTF condition ID               |
 | complement   | string | Complement ERC1155 token ID of conditional token being traded |
 | expiry       | number | Expiry timestamp (UNIX format)                                |
+
+### Crypto Price
+
+| Name      | Type   | Description                              |
+| --------- | ------ | ---------------------------------------- |
+| symbol    | string | Symbol of the asset                      |
+| timestamp | number | Timestamp in milliseconds for the update |
+| value     | number | Value at the time of update              |
+
+## Subscription handler types
+
+### Crypto Price Historical
+
+| Name   | Type   | Description                                                      |
+| ------ | ------ | ---------------------------------------------------------------- |
+| symbol | string | Symbol of the asset                                              |
+| data   | array  | Array of price data objects, each containing timestamp and value |
