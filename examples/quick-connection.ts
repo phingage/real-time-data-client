@@ -9,26 +9,54 @@ const onConnect = (client: RealTimeDataClient): void => {
     // Subscribe to a topic
     client.subscribe({
         subscriptions: [
+            // comments
             {
                 topic: "comments",
                 type: "*", // "*"" can be used to connect to all the types of the topic
                 //filters: `{"parentEntityID":20200,"parentEntityType":"Event"}`,
             },
 
-            // Subscribe to more topics
+            // activity
             {
                 topic: "activity",
-                type: "trades",
-                //filters: `{"event_slug":"elon-musk-of-tweets-may-23-30"}`, // filters: `{"market_slug":"slug"}`
+                type: "*",
+                //filters: `{"event_slug":"slug"}`, // filters: `{"market_slug":"slug"}
             },
 
-            // RFQ
+            // rfq
             {
                 topic: "rfq",
-                type: "*", // "requests" or "quotes"
+                type: "*",
+                //filters: `{"event_slug":"slug"}`, // filters: `{"market_slug":"slug"}
+            },
+
+            // crypto_prices
+            {
+                topic: "crypto_prices",
+                type: "*",
+                filters: `{"symbol":"btCUSDt"}`,
+            },
+
+            // clob_market
+            {
+                topic: "clob_market",
+                type: "*",
+                // filters: `["71321045679252212594626385532706912750332728571942532289631379312455583992563"]`,
+            },
+
+            // clob_user
+            {
+                topic: "clob_user",
+                type: "*",
+                clob_auth: {
+                    key: "xxxxxx-xxxx-xxxx-xxxx-xxxxxx",
+                    secret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    passphrase: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                },
             },
         ],
     });
+
     /*
     // Unsubscribe from a topic
     client.subscribe({
