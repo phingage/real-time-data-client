@@ -83,31 +83,31 @@ client.disconnect();
 
 ## Messages hierarchy
 
-| Topic           | Type               | Auth     | Filters (if it is empty the messages won't be filtered)         | Schema           | Subscription Handler    |
-| --------------- | ------------------ | -------- | --------------------------------------------------------------- | ---------------- | ----------------------- |
-| `activity`      | `trades`           | -        | `{"event_slug":"string"}' OR '{"market_slug":"string"}`         | `Trade`          |                         |
-| `activity`      | `orders_matched`   | -        | `{"event_slug":"string"}' OR '{"market_slug":"string"}`         | `Trade`          |                         |
-| `comments`      | `comment_created`  | -        | `{"parentEntityID":number,"parentEntityType":"Event / Series"}` | `Comment`        |                         |
-| `comments`      | `comment_removed`  | -        | `{"parentEntityID":number,"parentEntityType":"Event / Series"}` | `Comment`        |                         |
-| `comments`      | `reaction_created` | -        | `{"parentEntityID":number,"parentEntityType":"Event / Series"}` | `Reaction`       |                         |
-| `comments`      | `reaction_removed` | -        | `{"parentEntityID":number,"parentEntityType":"Event / Series"}` | `Reaction`       |                         |
-| `rfq`           | `request_created`  | -        | -                                                               | `Request`        |                         |
-| `rfq`           | `request_edited`   | -        | -                                                               | `Request`        |                         |
-| `rfq`           | `request_canceled` | -        | -                                                               | `Request`        |                         |
-| `rfq`           | `request_expired`  | -        | -                                                               | `Request`        |                         |
-| `rfq`           | `quote_created`    | -        | -                                                               | `Quote`          |                         |
-| `rfq`           | `quote_edited`     | -        | -                                                               | `Quote`          |                         |
-| `rfq`           | `quote_canceled`   | -        | -                                                               | `Quote`          |                         |
-| `rfq`           | `quote_expired`    | -        | -                                                               | `Quote`          |                         |
-| `crypto_prices` | `update`           | -        | '{"symbol":string}'                                             | `CryptoPrice`    | `CryptoPriceHistorical` |
-| `clob_user`     | `order`            | ClobAuth | -                                                               | `Order`          |                         |
-| `clob_user`     | `trade`            | ClobAuth | -                                                               | `Trade`          |                         |
-| `clob_market`   | `price_change`     | -        | `["100","200",...]`                                             | `PriceChange`    |                         |
-| `clob_market`   | `agg_orderbook`    | -        | `["100","200",...]`                                             | `AggOrderbook`   | `AggOrderbook`          |
-| `clob_market`   | `last_trade_price` | -        | `["100","200",...]`                                             | `LastTradePrice` |                         |
-| `clob_market`   | `tick_size_change` | -        | `["100","200",...]`                                             | `TickSizeChange` |                         |
-| `clob_market`   | `market_created`   | -        | -                                                               | `ClobMarket`     |                         |
-| `clob_market`   | `market_resolved`  | -        | -                                                               | `ClobMarket`     |                         |
+| Topic           | Type               | Auth     | Filters (if it is empty the messages won't be filtered)         | Schema                              | Subscription Handler                                        |
+| --------------- | ------------------ | -------- | --------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------- |
+| `activity`      | `trades`           | -        | `{"event_slug":"string"}' OR '{"market_slug":"string"}`         | [`Trade`](#trade)                   |                                                             |
+| `activity`      | `orders_matched`   | -        | `{"event_slug":"string"}' OR '{"market_slug":"string"}`         | [`Trade`](#trade)                   |                                                             |
+| `comments`      | `comment_created`  | -        | `{"parentEntityID":number,"parentEntityType":"Event / Series"}` | [`Comment`](#comment)               |                                                             |
+| `comments`      | `comment_removed`  | -        | `{"parentEntityID":number,"parentEntityType":"Event / Series"}` | [`Comment`](#comment)               |                                                             |
+| `comments`      | `reaction_created` | -        | `{"parentEntityID":number,"parentEntityType":"Event / Series"}` | [`Reaction`](#reaction)             |                                                             |
+| `comments`      | `reaction_removed` | -        | `{"parentEntityID":number,"parentEntityType":"Event / Series"}` | [`Reaction`](#reaction)             |                                                             |
+| `rfq`           | `request_created`  | -        | -                                                               | [`Request`](#request)               |                                                             |
+| `rfq`           | `request_edited`   | -        | -                                                               | [`Request`](#request)               |                                                             |
+| `rfq`           | `request_canceled` | -        | -                                                               | [`Request`](#request)               |                                                             |
+| `rfq`           | `request_expired`  | -        | -                                                               | [`Request`](#request)               |                                                             |
+| `rfq`           | `quote_created`    | -        | -                                                               | [`Quote`](#quote)                   |                                                             |
+| `rfq`           | `quote_edited`     | -        | -                                                               | [`Quote`](#quote)                   |                                                             |
+| `rfq`           | `quote_canceled`   | -        | -                                                               | [`Quote`](#quote)                   |                                                             |
+| `rfq`           | `quote_expired`    | -        | -                                                               | [`Quote`](#quote)                   |                                                             |
+| `crypto_prices` | `update`           | -        | `{"symbol":string}`                                             | [`CryptoPrice`](#cryptoprice)       | [`CryptoPriceHistorical`](#initial-data-dump-on-connection) |
+| `clob_user`     | `order`            | ClobAuth | -                                                               | [`Order`](#order)                   |                                                             |
+| `clob_user`     | `trade`            | ClobAuth | -                                                               | [`Trade`](#trade-1)                 |                                                             |
+| `clob_market`   | `price_change`     | -        | `["100","200",...]`                                             | [`PriceChange`](#pricechange)       |                                                             |
+| `clob_market`   | `agg_orderbook`    | -        | `["100","200",...]`                                             | [`AggOrderbook`](#aggorderbook)     | [`AggOrderbook`](#aggorderbook)                             |
+| `clob_market`   | `last_trade_price` | -        | `["100","200",...]`                                             | [`LastTradePrice`](#lasttradeprice) |                                                             |
+| `clob_market`   | `tick_size_change` | -        | `["100","200",...]`                                             | [`TickSizeChange`](#ticksizechange) |                                                             |
+| `clob_market`   | `market_created`   | -        | -                                                               | [`ClobMarket`](#clobmarket)         |                                                             |
+| `clob_market`   | `market_resolved`  | -        | -                                                               | [`ClobMarket`](#clobmarket)         |                                                             |
 
 ## Auth
 
