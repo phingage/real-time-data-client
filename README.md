@@ -319,14 +319,15 @@ When the connection is stablished, if a `filter` is used, the server will dump a
 
 #### PriceChange
 
-| Name       | Type   | Description                                                     |
-| ---------- | ------ | --------------------------------------------------------------- |
-| `asset_id` | string | Asset identifier                                                |
-| `hash`     | string | Unique hash ID of the book snapshot                             |
-| `market`   | string | Condition ID                                                    |
-| `price`    | string | Price quoted (e.g., `0.5`)                                      |
-| `side`     | string | Side of the quote: `BUY` or `SELL`                              |
-| `size`     | string | Size or volume available at the quoted price (e.g., `0`, `100`) |
+| Name        | Type               | Description                                                     |
+| ----------- | ------------------ | --------------------------------------------------------------- |
+| `asset_id`  | string             | Asset identifier                                                |
+| `hash`      | string             | Unique hash ID of the book snapshot                             |
+| `market`    | string             | Condition ID                                                    |
+| `price`     | string             | Price quoted (e.g., `0.5`)                                      |
+| `side`      | string             | Side of the quote: `BUY` or `SELL`                              |
+| `size`      | string             | Size or volume available at the quoted price (e.g., `0`, `100`) |
+| `timestamp` | string (timestamp) | Timestamp in milliseconds since epoch (UNIX time \* 1000)       |
 
 #### AggOrderbook
 

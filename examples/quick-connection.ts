@@ -2,7 +2,7 @@ import { RealTimeDataClient } from "../src/client";
 import { Message } from "../src/model";
 
 const onMessage = (_: RealTimeDataClient, message: Message): void => {
-    console.log(message.topic, message.type, message.payload);
+    console.log(message.topic, message.type, message.timestamp, message.payload);
 };
 
 const onConnect = (client: RealTimeDataClient): void => {
