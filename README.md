@@ -102,7 +102,7 @@ client.disconnect();
 | `crypto_prices` | `update`           | -        | `{"symbol":string}`                                             | [`CryptoPrice`](#cryptoprice)       | [`CryptoPriceHistorical`](#initial-data-dump-on-connection) |
 | `clob_user`     | `order`            | ClobAuth | -                                                               | [`Order`](#order)                   |                                                             |
 | `clob_user`     | `trade`            | ClobAuth | -                                                               | [`Trade`](#trade-1)                 |                                                             |
-| `clob_market`   | `price_change`     | -        | `["100","200",...]`                                             | [`PriceChange`](#pricechange)       |                                                             |
+| `clob_market`   | `price_change`     | -        | `["100","200",...]`                                             | [`PriceChanges`](#pricechanges)     |                                                             |
 | `clob_market`   | `agg_orderbook`    | -        | `["100","200",...]`                                             | [`AggOrderbook`](#aggorderbook)     | [`AggOrderbook`](#aggorderbook)                             |
 | `clob_market`   | `last_trade_price` | -        | `["100","200",...]`                                             | [`LastTradePrice`](#lasttradeprice) |                                                             |
 | `clob_market`   | `tick_size_change` | -        | `["100","200",...]`                                             | [`TickSizeChange`](#ticksizechange) |                                                             |
@@ -317,17 +317,23 @@ When the connection is stablished, if a `filter` is used, the server will dump a
 
 ### CLOB market
 
-#### PriceChange
+#### PriceChanges
 
-| Name        | Type               | Description                                                     |
-| ----------- | ------------------ | --------------------------------------------------------------- |
-| `asset_id`  | string             | Asset identifier                                                |
-| `hash`      | string             | Unique hash ID of the book snapshot                             |
-| `market`    | string             | Condition ID                                                    |
-| `price`     | string             | Price quoted (e.g., `0.5`)                                      |
-| `side`      | string             | Side of the quote: `BUY` or `SELL`                              |
-| `size`      | string             | Size or volume available at the quoted price (e.g., `0`, `100`) |
-| `timestamp` | string (timestamp) | Timestamp in milliseconds since epoch (UNIX time \* 1000)       |
+| Name            | Type               | Description                                               |
+| --------------- | ------------------ | --------------------------------------------------------- |
+| `market`        | string             | Condition ID                                              |
+| `price_changes` | array              | Price changes by book                                     |
+| `timestamp`     | string (timestamp) | Timestamp in milliseconds since epoch (UNIX time \* 1000) |
+
+##### PriceChange
+
+| Name       | Type   | Description                                                     |
+| ---------- | ------ | --------------------------------------------------------------- |
+| `asset_id` | string | Asset identifier                                                |
+| `hash`     | string | Unique hash ID of the book snapshot                             |
+| `price`    | string | Price quoted (e.g., `0.5`)                                      |
+| `side`     | string | Side of the quote: `BUY` or `SELL`                              |
+| `size`     | string | Size or volume available at the quoted price (e.g., `0`, `100`) |
 
 #### AggOrderbook
 
