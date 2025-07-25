@@ -57,6 +57,9 @@ export interface Message {
 
     /** Payload containing the message data */
     payload: object;
+
+    /** Connection ID */
+    connection_id: string;
 }
 
 /**
