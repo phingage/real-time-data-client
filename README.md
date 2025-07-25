@@ -334,6 +334,8 @@ When the connection is stablished, if a `filter` is used, the server will dump a
 | `price`    | string | Price quoted (e.g., `0.5`)                                      |
 | `side`     | string | Side of the quote: `BUY` or `SELL`                              |
 | `size`     | string | Size or volume available at the quoted price (e.g., `0`, `100`) |
+| `best_ask` | string | Best ask price                                                  |
+| `best_bid` | string | Best bid price                                                  |
 
 #### AggOrderbook
 
