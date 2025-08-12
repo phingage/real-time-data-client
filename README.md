@@ -102,7 +102,7 @@ client.disconnect();
 | `crypto_prices` | `update`           | -        | `{"symbol":string}`                                             | [`CryptoPrice`](#cryptoprice)       | [`CryptoPriceHistorical`](#initial-data-dump-on-connection) |
 | `clob_user`     | `order`            | ClobAuth | -                                                               | [`Order`](#order)                   |                                                             |
 | `clob_user`     | `trade`            | ClobAuth | -                                                               | [`Trade`](#trade-1)                 |                                                             |
-| `clob_market`   | `price_change`     | -        | `["100","200",...]`                                             | [`PriceChanges`](#pricechanges)     |                                                             |
+| `clob_market`   | `price_change`     | -        | `["100","200",...]` (filters are mandatory on this one)         | [`PriceChanges`](#pricechanges)     |                                                             |
 | `clob_market`   | `agg_orderbook`    | -        | `["100","200",...]`                                             | [`AggOrderbook`](#aggorderbook)     | [`AggOrderbook`](#aggorderbook)                             |
 | `clob_market`   | `last_trade_price` | -        | `["100","200",...]`                                             | [`LastTradePrice`](#lasttradeprice) |                                                             |
 | `clob_market`   | `tick_size_change` | -        | `["100","200",...]`                                             | [`TickSizeChange`](#ticksizechange) |                                                             |
@@ -326,6 +326,8 @@ When the connection is stablished, if a `filter` is used, the server will dump a
 | `timestamp`     | string (timestamp) | Timestamp in milliseconds since epoch (UNIX time \* 1000) |
 
 ##### PriceChange
+
+NOTE: Filters are mandatory for this topic/type. Example: `["100","200",...]` (collection of token ids)
 
 | Name       | Type   | Description                                                     |
 | ---------- | ------ | --------------------------------------------------------------- |
