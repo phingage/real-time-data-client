@@ -319,25 +319,25 @@ When the connection is stablished, if a `filter` is used, the server will dump a
 
 #### PriceChanges
 
-| Name            | Type               | Description                                               |
-| --------------- | ------------------ | --------------------------------------------------------- |
-| `market`        | string             | Condition ID                                              |
-| `price_changes` | array              | Price changes by book                                     |
-| `timestamp`     | string (timestamp) | Timestamp in milliseconds since epoch (UNIX time \* 1000) |
+| Name                | Type               | Description                                               |
+| ------------------- | ------------------ | --------------------------------------------------------- |
+| `m` (market)        | string             | Condition ID                                              |
+| `pc` (price change) | array              | Price changes by book                                     |
+| `t` (timestamp)     | string (timestamp) | Timestamp in milliseconds since epoch (UNIX time \* 1000) |
 
 ##### PriceChange
 
 NOTE: Filters are mandatory for this topic/type. Example: `["100","200",...]` (collection of token ids)
 
-| Name       | Type   | Description                                                     |
-| ---------- | ------ | --------------------------------------------------------------- |
-| `asset_id` | string | Asset identifier                                                |
-| `hash`     | string | Unique hash ID of the book snapshot                             |
-| `price`    | string | Price quoted (e.g., `0.5`)                                      |
-| `side`     | string | Side of the quote: `BUY` or `SELL`                              |
-| `size`     | string | Size or volume available at the quoted price (e.g., `0`, `100`) |
-| `best_ask` | string | Best ask price                                                  |
-| `best_bid` | string | Best bid price                                                  |
+| Name            | Type   | Description                                                     |
+| --------------- | ------ | --------------------------------------------------------------- |
+| `a` (asset_id)  | string | Asset identifier                                                |
+| `h` (hash)      | string | Unique hash ID of the book snapshot                             |
+| `p` (price)     | string | Price quoted (e.g., `0.5`)                                      |
+| `s` (side)      | string | Side of the quote: `BUY` or `SELL`                              |
+| `si` (size)     | string | Size or volume available at the quoted price (e.g., `0`, `100`) |
+| `ba` (best_ask) | string | Best ask price                                                  |
+| `bb` (best_bid) | string | Best bid price                                                  |
 
 #### AggOrderbook
 
