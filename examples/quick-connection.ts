@@ -43,7 +43,7 @@ const onConnect = (client: RealTimeDataClient): void => {
                 filters: "", // filters: `{"symbol":"btCUSDt"}`,
             },
 
-            // crypto_prices
+            // crypto_prices_chainlink
             {
                 topic: "crypto_prices_chainlink",
                 type: "*",
