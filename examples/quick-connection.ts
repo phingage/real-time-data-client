@@ -47,7 +47,7 @@ const onConnect = (client: RealTimeDataClient): void => {
             {
                 topic: "crypto_prices_chainlink",
                 type: "*",
-                filters: "", // filters: `{"symbol":"btCUSDt"}`,
+                filters: "", // filters: `{"symbol":"eth/usd"}`,
             },
 
             // clob_market
