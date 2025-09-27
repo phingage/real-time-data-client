@@ -9,6 +9,9 @@ import {
 
 export {
     RealTimeDataClient,
+};
+
+export type {
     RealTimeDataClientArgs,
     ClobApiKeyCreds,
     GammaAuth,
